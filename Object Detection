@@ -1,0 +1,36 @@
+def capture_image():
+    key=cv2.waitKey(1)
+    cap=cv2.VideoCapture(0)  # capturing image from web video camera
+    while True:
+        try:
+            check,frame=cap.read()
+            print(check,frame)      # print it as web cam is on screen
+            cv2.imshow("Capturing Image...", frame)
+            key=cv2.waitKey(1)
+            if key == ord("c"):
+                cv2.imwrite(filename="save_img.jpg", img = frame)
+                cap.release()
+                img_new = cv2.imread("save_img.jpg", cv2.IMREAD_GRAYSCALE)
+                img_new = cv2.imshow("Click Image..",img_new)
+                cv2.waitKey(1650)
+                cv2.destroyAllWindows()
+                img_= cv2.imread("save_img.jpg", cv2.IMREAD_ANYCOLOR)
+                print("Image is Done Processing")
+                gray=cv2.cvtColor(img_, cv2.COLOR_BGR2GRAY)         # converting Color image to grayscale image
+                img_=cv2.resize(gray,(100,100))             # resizing image
+                img_resized=cv2.imwrite(filename="gray_img.jpg",img=img_)
+                print("Image Successfully Saved")
+                break
+
+            elif key == ord("q"):
+                print("Turning Web Camera Off...")
+                cap.release()
+                print("Camera Off Successfully")
+                cv2.destroyAllWindows()
+        except(KeyboardInterrupt):
+            print("Turning Web Camera Off!!!!")
+            cap.release()
+            print("Camera off Successfully")
+            print("NO IMAGE IS CAPTURED!!!")
+            cv2.destroyAllWindows()
+            break
