@@ -1,3 +1,6 @@
+import cv2
+import os
+
 def capture_image():
     key=cv2.waitKey(1)
     cap=cv2.VideoCapture(0)  # capturing image from web video camera
