@@ -1,0 +1,23 @@
+import cv2
+import os
+from PIL import Image
+import numpy as np
+from imageai.Detection import ObjectDetection
+from PIL import ImageTk,Image
+
+def train_object():
+    execution_path = os.getcwd()
+
+    detect = ObjectDetection()
+    detect.setModelTypeAsRetinaNet()
+    detect.setModelPath( os.path.join(execution_path , "resnet50_coco_best_v2.1.0.h5"))
+    detect.loadModel()
+    detections = detect.detectObjectsFromImage(input_image=os.path.join(execution_path , "save_img.jpg"), output_image_path=os.path.join(execution_path , "imagenew.jpg"))
+    print("Processing Intput Image")
+    for imge in detections:
+        print(imge["name"] , " : " , imge["percentage_probability"] )
+        print("Done Processing")
+
+def show_object():
+    im = Image.open("imagenew.jpg") 
+    im.show()
